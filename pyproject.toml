@@ -1,0 +1,9 @@
+[project]
+name = "integrityflow-agent-orchestrator"
+version = "0.1.0"
+description = "Local-first agent orchestrator with guardrails, routing, and tracing (Ollama + Pydantic)."
+requires-python = ">=3.11"
+dependencies = ["pydantic", "requests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
