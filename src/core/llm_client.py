@@ -21,7 +21,6 @@ def chat(prompt:str) -> str:
         raise RuntimeError(f"Request failed with status {response.status_code}: {response.text}")
     
 ## return the content of the first choice message from the response json
-    ##return response.json()["message"]["content"]
+    return response.json()["message"]["content"]
 
-    print(response.json())  ## Debugging line to inspect the response structure
-    return "TEST"
+    

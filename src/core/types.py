@@ -21,6 +21,8 @@ class RouteDecision(BaseModel):
     reasons: List[str] = Field(default_factory=list)
 
 
-
-
+class AgentResponse(BaseModel):
+    agent: str
+    content: str
+    used_tools: List[str] = Field(default_factory=list)
 
