@@ -1,11 +1,13 @@
-
 from __future__ import annotations
 
-from ..agents.coding_agent import CodingAgent
-from ..agents.explainer_agent import ExplainerAgent
+from .types import AgentResponse, UserQuery
 from .guardrails import apply_guardrails
 from .routers import route
-from .types import AgentResponse, UserQuery
+from .tracer import Tracer
+
+from ..agents.explainer_agent import ExplainerAgent
+from ..agents.coding_agent import CodingAgent
+
 
 AGENTS = {
     "explainer": ExplainerAgent(),
@@ -13,34 +15,77 @@ AGENTS = {
 }
 
 
-def handle_query(text: str) -> AgentResponse:
-    # 1) Wrap input
-    query = UserQuery(text=text)
+def handle_query(text: str, tracer: Tracer | None = None) -> AgentResponse:
+    if tracer is None:
+        tracer = Tracer()
 
-    # 2) Guardrails
-    guardrail_result = apply_guardrails(query)
-    if not guardrail_result.allowed:
-        return AgentResponse(
-            agent="guardrails",
-            content="Blocked: " + "; ".join(guardrail_result.reasons),
-            used_tools=[],
+    try:
+        # 1) Wrap input
+        query = UserQuery(text=text)
+
+        # 2) Guardrails
+        gr = apply_guardrails(query)
+        if not gr.allowed:
+            tracer.add(
+                stage="guardrails",
+                status="blocked",
+                data={"reasons": gr.reasons},
+            )
+            return AgentResponse(
+                agent="guardrails",
+                content="Blocked: " + "; ".join(gr.reasons),
+                used_tools=[],
+            )
+
+        tracer.add(
+            stage="guardrails",
+            status="ok",
+            data={"cleaned": gr.cleaned_text is not None},
         )
 
-    # 3) Use cleaned text (if guardrails produced it)
-    cleaned_text = guardrail_result.cleaned_text or text
+        # 3) Cleaned text
+        cleaned_text = gr.cleaned_text or text
 
-    # 4) Route
-    route_decision = route(UserQuery(text=cleaned_text))
-
-    # 5) Pick agent
-    agent = AGENTS.get(route_decision.agent)
-    if agent is None:
-        return AgentResponse(
-            agent="fallback",
-            content=f"No agent wired for: {route_decision.agent}",
-            used_tools=[],
+        # 4) Router
+        decision = route(UserQuery(text=cleaned_text))
+        tracer.add(
+            stage="router",
+            status="ok",
+            agent=decision.agent,
+            data={"confidence": decision.confidence, "reasons": decision.reasons},
         )
 
-    # 6) Run agent (your agents accept UserQuery)
-    cleaned_query = UserQuery(text=cleaned_text)
-    return agent.run(cleaned_query)
+        # 5) Pick agent
+        agent = AGENTS.get(decision.agent)
+        if agent is None:
+            tracer.add(
+                stage="orchestrator",
+                status="fallback",
+                agent=decision.agent,
+                data={"reason": "agent_not_wired"},
+            )
+            return AgentResponse(
+                agent="fallback",
+                content=f"No agent wired for: {decision.agent}",
+                used_tools=[],
+            )
+
+        # 6) Run agent (your agents accept UserQuery)
+        tracer.add(stage="agent", status="ok", agent=agent.name, data={})
+        return agent.run(UserQuery(text=cleaned_text))
+
+    except Exception as e:
+        tracer.add(
+            stage="orchestrator",
+            status="error",
+            data={"error": str(e)},
+        )
+        return AgentResponse(
+            agent="error",
+            content="Internal error: " + str(e),
+            used_tools=[],
+        )
+    
+
+
+    

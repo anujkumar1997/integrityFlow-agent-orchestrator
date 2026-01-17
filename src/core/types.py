@@ -26,3 +26,9 @@ class AgentResponse(BaseModel):
     content: str
     used_tools: List[str] = Field(default_factory=list)
 
+class TraceEvent(BaseModel):
+    stage: Literal["guardrails", "agent", "router", "orchestrator"]
+    timestamp: float
+    status: Literal["ok", "blocked", "error", "fallback"]
+    agent: Optional[str] = None
+    data: Dict[str, Any] = Field(default_factory=dict)
