@@ -1,3 +1,4 @@
+
 # IntegrityFlow Agent Orchestrator (Local LLM, Free)
 
 IntegrityFlow is a **simple agentic system** built to understand how modern AI systems are designed.
@@ -35,44 +36,7 @@ It avoids heavy frameworks on purpose, to make the learning clear.
 ---
 
 ## High-Level Flow
-# IntegrityFlow Agent Orchestrator (Local LLM, Free)
-
-IntegrityFlow is a **simple agentic system** built to understand how modern AI systems are designed.
-It runs **fully on a local LLM using Ollama**, so **no paid API keys are required**.
-
-This project focuses on **learning**, **clean architecture**, and **agent orchestration**.
-
----
-
-## What This Project Does
-
-The system takes a user query and processes it through a clear pipeline:
-
-1. **Guardrails** – validate and block unsafe or risky input  
-2. **Router** – decide which agent should handle the query  
-3. **Agent** – build a role-specific prompt  
-4. **Local LLM (Ollama)** – generate the response  
-5. **Tracing** – record what happened at each stage  
-
----
-
-## Why This Project Exists
-
-This project demonstrates:
-
-- how to build an agentic system from scratch  
-- separation of concerns (core logic vs agents vs data)  
-- safe input handling using guardrails  
-- routing requests to specialist agents  
-- observability using simple tracing  
-- running LLM systems **locally and for free**
-
-It avoids heavy frameworks on purpose, to make the learning clear.
-
----
-
-## High-Level Flow
-
+```
 User Input
 ↓
 Guardrails (allow / block)
@@ -85,7 +49,7 @@ LLM Client (Ollama)
 ↓
 Response + Trace Events
 
-
+```
 ---
 
 ## Project Structure
