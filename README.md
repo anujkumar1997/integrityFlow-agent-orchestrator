@@ -53,7 +53,7 @@ Response + Trace Events
 ---
 
 ## Project Structure
-
+```
 src/
 app.py # CLI entry point
 agents/
@@ -71,7 +71,7 @@ tests/
 test_guardrails.py
 test_router.py
 
-
+```
 
 ---
 
