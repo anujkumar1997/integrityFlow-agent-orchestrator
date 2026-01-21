@@ -83,34 +83,109 @@ test_router.py
 
 ---
 
-## Setup Instructions
+## Installation
 
-### 1) Create and activate virtual environment
+Clone the project and install it:
 
 ```bash
+git clone https://github.com/anujkumar1997/integrityFlow-agent-orchestrator.git
+cd integrityFlow-agent-orchestrator
+
 python3 -m venv .venv
 source .venv/bin/activate
-```
 
+pip install -e .
 ### 2) Install Dependencies
 ```bash
 pip install pydantic requests pytest
 ```
+---
 
-### 3) Start Ollama and pull a model
+## CLI Usage section  
+Explain **how to run your tool** with the new CLI command.
+
+```
+## Running the application (CLI)
+
+After installation, run the CLI:
+
+```bash
+integrityflow
+
+```
+
+---
+
+## Configuration section  
+This tells users how to change model, URL, timeout, etc. (even if not implemented fully yet).
+
+## Configuration
+
+The application connects to a local Ollama server.
+
+Default values:
+- Base URL: `http://localhost:11434`
+- Model name: `llama3.1:8b`
+
+In the future, these will be configurable using environment variables:
+
+- `INTEGRITYFLOW_OLLAMA_BASE_URL`
+- `INTEGRITYFLOW_OLLAMA_MODEL`
+- `INTEGRITYFLOW_REQUEST_TIMEOUT_SECONDS`
+
+
+### Start Ollama and pull a model
 ```bash
 ollama run llama3.1:8b
 
 ```
 
-## RUN THE APPLICATION
-
-From the project roor:
+## To exit the program, type:
 
 ```bash
-python3 -m src.app
+exit
 ```
-Type "exit' to quit
+
+## How to add a new agent
+
+Agents live in `src/agents/`.
+
+To create a new agent:
+
+1. Make a new file in `src/agents/`  
+2. Create a class that builds prompts and returns responses  
+3. Register it in the orchestrator  
+4. Update the router so it can send messages to the new agent
+
+This makes it easy to extend the system.
+
+## How to add a new guardrail
+
+Guardrails live in `src/core/guardrails.py`.
+
+To add a new rule:
+1. Create a new check function  
+2. Add it to the main guardrails pipeline  
+3. Add tests in `tests/test_guardrails.py`
+
+This makes the system safer and easier to maintain.
+
+## Production Notes
+
+This project follows good engineering practices:
+
+- clean separation between modules
+- testable components
+- tracing for every request
+- CLI entrypoint
+- local LLM usage
+
+Possible future improvements:
+- environment-based configuration
+- embedding-based router
+- metrics and logging improvements
+- web API (FastAPI)
+
 
 ## Example Inputs
 
