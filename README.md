@@ -1,7 +1,7 @@
 
 # IntegrityFlow Agent Orchestrator (Local LLM, Free)
 
-IntegrityFlow is a **simple agentic system** built to understand how modern AI systems are designed.
+IntegrityFlow is a **simple agentic system** built to understand how modern AI systems are designed.  
 It runs **fully on a local LLM using Ollama**, so **no paid API keys are required**.
 
 This project focuses on **learning**, **clean architecture**, and **agent orchestration**.
@@ -86,7 +86,6 @@ test_router.py
 ## Installation
 
 Clone the project and install it:
-
 ```bash
 git clone https://github.com/anujkumar1997/integrityFlow-agent-orchestrator.git
 cd integrityFlow-agent-orchestrator
@@ -95,32 +94,31 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 pip install -e .
-### 2) Install Dependencies
+```
+
+### Install Dependencies
 ```bash
 pip install pydantic requests pytest
 ```
 ---
 
-## CLI Usage section  
-Explain **how to run your tool** with the new CLI command.
 
-```
 ## Running the application (CLI)
 
 After installation, run the CLI:
-
 ```bash
 integrityflow
-
 ```
 
+
+## To exit the program, type:
+```bash
+exit
+```
 ---
 
-## Configuration section  
-This tells users how to change model, URL, timeout, etc. (even if not implemented fully yet).
 
 ## Configuration
-
 The application connects to a local Ollama server.
 
 Default values:
@@ -137,14 +135,8 @@ In the future, these will be configurable using environment variables:
 ### Start Ollama and pull a model
 ```bash
 ollama run llama3.1:8b
-
 ```
 
-## To exit the program, type:
-
-```bash
-exit
-```
 
 ## How to add a new agent
 
