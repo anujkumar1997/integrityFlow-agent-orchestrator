@@ -1,3 +1,8 @@
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Ollama](https://img.shields.io/badge/LLM-Ollama-green)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+![Status](https://img.shields.io/badge/Project-Learning%20Project-lightgrey)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)
 
 # IntegrityFlow Agent Orchestrator (Local LLM, Free)
 
@@ -19,6 +24,16 @@ The system takes a user query and processes it through a clear pipeline:
 5. **Tracing** – record what happened at each stage  
 
 ---
+## ✨ Features
+
+- Runs fully on a **local LLM** (Ollama)
+- **No API keys** needed
+- Clear agent pipeline (guardrails → router → agent → LLM → trace)
+- Easy to extend with new agents
+- Safe input checking using guardrails
+- Very simple codebase for learning
+- CLI experience out of the box
+- Full tracing of every step
 
 ## Why This Project Exists
 
@@ -49,6 +64,14 @@ LLM Client (Ollama)
 ↓
 Response + Trace Events
 
+```
+```mermaid
+flowchart TD
+    A[User Input] --> B[Guardrails]
+    B --> C[Router]
+    C --> D[Agent]
+    D --> E[Local LLM (Ollama)]
+    E --> F[Response + Trace]
 ```
 ---
 
@@ -193,4 +216,23 @@ Each request produces trace events, such as:
 - which agent was used
 - fallback or error cases
 - Tracing helps understand how the system made decisions.
+
+## 📌 Recruiter Summary
+
+This project shows my understanding of:
+
+- how LLM-based systems are structured  
+- how to build an agent pipeline end-to-end  
+- how to write clean, modular, and testable code  
+- how to design safe and extendable AI systems  
+- how to work with local LLMs (Ollama)  
+
+The code is small by design so the architecture is easy to understand.
+
+
+
+---
+
+Made with ❤️ for learning and experimentation.  
+Feel free to open issues or contribute!
 
