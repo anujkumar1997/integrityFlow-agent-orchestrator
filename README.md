@@ -67,11 +67,11 @@ Response + Trace Events
 ```
 ```mermaid
 flowchart TD
-    A[User Input] --> B[Guardrails]
-    B --> C[Router]
-    C --> D[Agent]
-    D --> E[Local LLM (Ollama)]
-    E --> F[Response + Trace]
+    A["User Input"] --> B["Guardrails"]
+    B --> C["Router"]
+    C --> D["Agent"]
+    D --> E["Local LLM (Ollama)"]
+    E --> F["Response + Trace"]
 ```
 ---
 
