@@ -15,14 +15,15 @@ venv:
 
 install:
 	. .venv/bin/activate && pip install -U pip
-	. .venv/bin/activate && pip install pydantic requests pytest
+	. .venv/bin/activate && pip install -r requirements.txt
 	@echo "Dependencies installed"
 
+
 run:
-	. .venv/bin/activate && python -m src.app
+	. .venv/bin/activate && python3 -m src.app
 
 test:
-	. .venv/bin/activate && python -m pytest -v
+	pytest -v
 
 clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
