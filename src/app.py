@@ -5,12 +5,15 @@ from .core.tracer import Tracer
 
 
 def main():
+    print("IntegrityFlow CLI. Type 'exit' to quit.\n")
+
     while True:
-        text = input("You (or 'exit'): ")
+        text = input("You: ")
         if text.strip().lower() == "exit":
+            print("Goodbye!")
             break
 
-        tracer = Tracer()  # new trace for this one request
+        tracer = Tracer()
         result = handle_query(text, tracer=tracer)
 
         print("Agent:", result.agent)
@@ -22,6 +25,7 @@ def main():
         for event in tracer.events:
             print(f"[{event.stage.upper()}] {event.status} - Agent: {event.agent} - Data: {event.data}")
         print("=" * 40)
+
 
 
 if __name__ == "__main__":
